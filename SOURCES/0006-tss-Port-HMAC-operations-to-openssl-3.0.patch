@@ -1,0 +1,103 @@
+From 7128994537a7103b25acb1df238db747d7cb3274 Mon Sep 17 00:00:00 2001
+From: Ken Goldman <kgold@linux.ibm.com>
+Date: Fri, 10 Sep 2021 16:33:10 -0400
+Subject: [PATCH 6/7] tss: Port HMAC operations to openssl 3.0
+
+Replace the deprecated APIs.
+
+- Compared to the next branch commit 6e22032d, changes related to HMAC are
+  ommited.
+
+Signed-off-by: Ken Goldman <kgold@linux.ibm.com>
+---
+ utils/tsscrypto.c | 58 ++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 37 insertions(+), 21 deletions(-)
+
+diff --git a/utils/tsscrypto.c b/utils/tsscrypto.c
+index 23d3b6e..1974563 100644
+--- a/utils/tsscrypto.c
++++ b/utils/tsscrypto.c
+@@ -79,6 +79,7 @@ extern int tssVerbose;
+ 
+ /* local prototypes */
+ 
++static TPM_RC TSS_Hash_GetOsslString(const char **str, TPMI_ALG_HASH hashAlg);
+ static TPM_RC TSS_Hash_GetMd(const EVP_MD **md,
+ 			     TPMI_ALG_HASH hashAlg);
+ 
+@@ -129,36 +130,51 @@ TPM_RC TSS_Crypto_Init(void)
+   Digests
+ */
+ 
+-static TPM_RC TSS_Hash_GetMd(const EVP_MD **md,
+-			     TPMI_ALG_HASH hashAlg)
++/* TSS_Hash_GetString() maps from the TCG hash algorithm to the OpenSSL string */
++
++static TPM_RC TSS_Hash_GetOsslString(const char **str, TPMI_ALG_HASH hashAlg)
+ {
+-    TPM_RC		rc = 0;
++    TPM_RC	rc = 0;
+ 
+-    if (rc == 0) {
+-	switch (hashAlg) {
++    switch (hashAlg) {
+ #ifdef TPM_ALG_SHA1
+-	  case TPM_ALG_SHA1:
+-	    *md = EVP_get_digestbyname("sha1");
+-	    break;
++      case TPM_ALG_SHA1:
++	*str = "sha1";
++	break;
+ #endif
+-#ifdef TPM_ALG_SHA256	
+-	  case TPM_ALG_SHA256:
+-	    *md = EVP_get_digestbyname("sha256");
+-	    break;
++#ifdef TPM_ALG_SHA256
++      case TPM_ALG_SHA256:
++	*str = "sha256";
++	break;
+ #endif
+ #ifdef TPM_ALG_SHA384
+-	  case 	TPM_ALG_SHA384:
+-	    *md = EVP_get_digestbyname("sha384");
+-	    break;
++      case TPM_ALG_SHA384:
++	*str = "sha384";
++	break;
+ #endif
+ #ifdef TPM_ALG_SHA512
+-	  case 	TPM_ALG_SHA512:
+-	    *md = EVP_get_digestbyname("sha512");
+-	    break;
++      case TPM_ALG_SHA512:
++	*str = "sha512";
++	break;
+ #endif
+-	  default:
+-	    rc = TSS_RC_BAD_HASH_ALGORITHM;
+-	}
++      default:
++	*str = NULL;
++	rc = TSS_RC_BAD_HASH_ALGORITHM;
++    }
++    return rc;
++}
++
++static TPM_RC TSS_Hash_GetMd(const EVP_MD **md,
++			     TPMI_ALG_HASH hashAlg)
++{
++    TPM_RC		rc = 0;
++    const char 		*str = NULL; 
++
++    if (rc == 0) {
++	rc =  TSS_Hash_GetOsslString(&str, hashAlg);
++    }
++    if (rc == 0) {
++	*md = EVP_get_digestbyname(str);
+     }
+     return rc;
+ }
+-- 
+2.34.1
+

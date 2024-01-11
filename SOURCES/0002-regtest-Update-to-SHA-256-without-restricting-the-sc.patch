@@ -1,0 +1,600 @@
+From 3e4c744cf09d43aba0ae9381c1527263e39a7c70 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?=C5=A0t=C4=9Bp=C3=A1n=20Hor=C3=A1=C4=8Dek?=
+ <shoracek@redhat.com>
+Date: Mon, 18 Apr 2022 23:51:02 +0200
+Subject: [PATCH 2/4] regtest: Update to SHA-256 without restricting the scope
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: ≈†tƒõp√°n Hor√°ƒçek <shoracek@redhat.com>
+Signed-off-by: Ken Goldman <kgold@linux.ibm.com>
+---
+ utils/policies/policycountertimer.bin | Bin 20 -> 32 bytes
+ utils/policies/policycphash.bin       | Bin 20 -> 32 bytes
+ utils/policies/policycphash.txt       |   2 +-
+ utils/policies/policycphashhash.bin   |   2 +-
+ utils/policies/policynvargs.txt       | Bin 13 -> 12 bytes
+ utils/policies/policynvnv.bin         | Bin 20 -> 32 bytes
+ utils/policies/policynvnv.txt         |   2 +-
+ utils/policies/policypcr.bin          |   2 +-
+ utils/policies/policypcr0.txt         |   2 +-
+ utils/policies/policypcrbm0.bin       | Bin 20 -> 32 bytes
+ utils/policies/policywrittenset.bin   |   2 +-
+ utils/reg.sh                          |   2 +
+ utils/regtests/testchangeauth.sh      |   4 +-
+ utils/regtests/testevict.sh           |  12 ++--
+ utils/regtests/testnv.sh              |   6 +-
+ utils/regtests/testpolicy.sh          |  80 +++++++++++++-------------
+ utils/regtests/testrsa.sh             |   8 +--
+ utils/regtests/testsign.sh            |  12 ++--
+ 18 files changed, 69 insertions(+), 67 deletions(-)
+
+diff --git a/utils/policies/policycountertimer.bin b/utils/policies/policycountertimer.bin
+index f767440113ab39251794257628b34f761ae05121..8937a155bdcdc535e5f013a03ce58fd5a193a6fd 100644
+GIT binary patch
+literal 32
+ocmeBTv0vY?A&j>pRZ{#s$085m*E`r54EYbFMa|K0nsfat0L0V`*#H0l
+
+literal 20
+ccmaFX(x@JK!18iNvf_!!0jhUbsX5I80B48^c>n+a
+
+diff --git a/utils/policies/policycphash.bin b/utils/policies/policycphash.bin
+index 1c357a65cc7cf408bc27d0a2a5c6a0735778e5ed..0f998b85ac2b6620049e350b0c31cc38b2f7414a 100644
+GIT binary patch
+literal 32
+qcmV+*0N?)`MNQmb<N(X@{1co_-#=a<IaKWOQl0d(fR)m3=&W@Mq7i=p
+
+literal 20
+ccmZR3lJoQPaee~<iJE0anHyTR1PSH?0A-{JC;$Ke
+
+diff --git a/utils/policies/policycphash.txt b/utils/policies/policycphash.txt
+index 52edeab..bc06262 100644
+--- a/utils/policies/policycphash.txt
++++ b/utils/policies/policycphash.txt
+@@ -1 +1 @@
+-0000016eb5f919bbc01f0ebad02010169a67a8c158ec12f3
++0000016e58f8c9f3300b71c97c7c6ec3e18afba176e3f582d96ab67df29acb559fc7d34f
+diff --git a/utils/policies/policycphashhash.bin b/utils/policies/policycphashhash.bin
+index a30627d..e88c974 100644
+--- a/utils/policies/policycphashhash.bin
++++ b/utils/policies/policycphashhash.bin
+@@ -1 +1 @@
+-µ˘ª¿∫– ög®¡XÏÛ
+\ No newline at end of file
++X¯…Û0q…||n√·ä˚°v„ıÇŸj∂}ÚöÀUü«”O
+\ No newline at end of file
+diff --git a/utils/policies/policynvargs.txt b/utils/policies/policynvargs.txt
+index 4f4d97c4a15e2f16ef61e8b3d31182382bc88b6d..ce58bc9f84b9623e708de4eb8427a57d9f9a160f 100644
+GIT binary patch
+literal 12
+KcmZQzKmY&$3;+QD
+
+literal 13
+LcmZQzKmaZP02crY
+
+diff --git a/utils/policies/policynvnv.bin b/utils/policies/policynvnv.bin
+index df080a73e76146d5474cc3d1b2ed1e09fad62e3d..bb54d249107c9ff17a8af7141d491f6bec88b001 100644
+GIT binary patch
+literal 32
+qcmV+*0N?+4*1${A{L{NkNx*#e^i_%2jn+j)Ac{3i{<g<lL9fU}!V=B^
+
+literal 20
+ccmdlp+sD6}Ax$z`_U4>Pb!)?)%V_-p09oM)7XSbN
+
+diff --git a/utils/policies/policynvnv.txt b/utils/policies/policynvnv.txt
+index a124ea9..5d3d62e 100644
+--- a/utils/policies/policynvnv.txt
++++ b/utils/policies/policynvnv.txt
+@@ -1 +1 @@
+-000001492c513f149e737ec4063fc1d37aee9beabc4b4bbf00042234b8df7cdf8605ee0a2088ac7dfe34c6566c5c
+\ No newline at end of file
++0000014915ec7bf0b50732b49f8228e07d24365338f9e3ab994b00af08e5a3bffe55fd8b000b45a8f4283309cd5ef189746d7526786f712eb3df9960508ee343d3e63376bc6c
+\ No newline at end of file
+diff --git a/utils/policies/policypcr.bin b/utils/policies/policypcr.bin
+index 8f69740..2597338 100644
+--- a/utils/policies/policypcr.bin
++++ b/utils/policies/policypcr.bin
+@@ -1 +1 @@
+-Ö3ÉıË<`C4oü7!vé
+\ No newline at end of file
++øÚ’éò˘|Ô¡Or≠Å3ºpí÷R∑»wïíTØÑ6
+\ No newline at end of file
+diff --git a/utils/policies/policypcr0.txt b/utils/policies/policypcr0.txt
+index b61f288..cd09bbf 100644
+--- a/utils/policies/policypcr0.txt
++++ b/utils/policies/policypcr0.txt
+@@ -1 +1 @@
+-0000000000000000000000000000000000000000
+\ No newline at end of file
++0000000000000000000000000000000000000000000000000000000000000000
+diff --git a/utils/policies/policypcrbm0.bin b/utils/policies/policypcrbm0.bin
+index bd0f292e05dc793b2831fec273c2eefa7b3a9672..666ea3c731d2f46d4d94768cab4464ff0bb0e5af 100644
+GIT binary patch
+literal 32
+ocmb>Z5cE02?1^I8ss%e3mgaqqyRPviCuhr<=Bo*jp4^KQ0V0YJ<^TWy
+
+literal 20
+bcmd0`@U(b%wL7eEQs@+Ww#>9`zjTxVT?`1l
+
+diff --git a/utils/policies/policywrittenset.bin b/utils/policies/policywrittenset.bin
+index 4f6bb8c..4ed9066 100644
+--- a/utils/policies/policywrittenset.bin
++++ b/utils/policies/policywrittenset.bin
+@@ -1 +1 @@
+-0sHﬂ_ÎÌeîÊ˝¨Ñ"„	
+\ No newline at end of file
++˜à}äË”ã‡¨SÛzûaãıHÖE<zT›∞∆¶;Î
+\ No newline at end of file
+diff --git a/utils/reg.sh b/utils/reg.sh
+index 048863b..2d9d100 100755
+--- a/utils/reg.sh
++++ b/utils/reg.sh
+@@ -72,6 +72,8 @@ PREFIX=./
+ # hash algorithms to be used for testing
+ 
+ export ITERATE_ALGS="sha1 sha256 sha384 sha512"
++export ITERATE_ALGS_SIZES="20 32 48 64"
++export ITERATE_ALGS_COUNT=4
+ export BAD_ITERATE_ALGS="sha256 sha384 sha512 sha1"
+ 
+ printUsage ()
+diff --git a/utils/regtests/testchangeauth.sh b/utils/regtests/testchangeauth.sh
+index 303b318..b830a96 100755
+--- a/utils/regtests/testchangeauth.sh
++++ b/utils/regtests/testchangeauth.sh
+@@ -67,11 +67,11 @@ do
+ 	checkSuccess $?
+ 
+ 	echo "Sign a digest with the original key ${SESS}"
+-	${PREFIX}sign -hk 80000001 -halg sha1 -if policies/aaa -os sig.bin -pwdk sig ${SESS} > run.out
++	${PREFIX}sign -hk 80000001 -halg sha256 -if policies/aaa -os sig.bin -pwdk sig ${SESS} > run.out
+ 	checkSuccess $?
+ 
+ 	echo "Sign a digest with the changed key"
+-	${PREFIX}sign -hk 80000002 -halg sha1 -if policies/aaa -os sig.bin -pwdk xxx > run.out
++	${PREFIX}sign -hk 80000002 -halg sha256 -if policies/aaa -os sig.bin -pwdk xxx > run.out
+ 	checkSuccess $?
+ 
+ 	echo "Flush the key"
+diff --git a/utils/regtests/testevict.sh b/utils/regtests/testevict.sh
+index 761eaa8..8f2806f 100755
+--- a/utils/regtests/testevict.sh
++++ b/utils/regtests/testevict.sh
+@@ -58,11 +58,11 @@ ${PREFIX}evictcontrol -ho 80000001 -hp 81800000 -hi p > run.out
+ checkSuccess $?
+ 
+ echo "Sign a digest with the transient key"
+-${PREFIX}sign -hk 80000001 -halg sha1 -if policies/aaa -os sig.bin -pwdk sig > run.out
++${PREFIX}sign -hk 80000001 -halg sha256 -if policies/aaa -os sig.bin -pwdk sig > run.out
+ checkSuccess $?
+ 
+ echo "Sign a digest with the persistent key"
+-${PREFIX}sign -hk 81800000 -halg sha1 -if policies/aaa -os sig.bin -pwdk sig > run.out
++${PREFIX}sign -hk 81800000 -halg sha256 -if policies/aaa -os sig.bin -pwdk sig > run.out
+ checkSuccess $?
+ 
+ echo "Flush the transient key"
+@@ -74,11 +74,11 @@ ${PREFIX}flushcontext -ha 81800000 > run.out
+ checkFailure $?
+ 
+ echo "Sign a digest with the transient key- should fail"
+-${PREFIX}sign -hk 80000001 -halg sha1 -if policies/aaa -os sig.bin -pwdk sig > run.out
++${PREFIX}sign -hk 80000001 -halg sha256 -if policies/aaa -os sig.bin -pwdk sig > run.out
+ checkFailure $?
+ 
+ echo "Sign a digest with the persistent key"
+-${PREFIX}sign -hk 81800000 -halg sha1 -if policies/aaa -os sig.bin -pwdk sig > run.out
++${PREFIX}sign -hk 81800000 -halg sha256 -if policies/aaa -os sig.bin -pwdk sig > run.out
+ checkSuccess $?
+ 
+ echo "Flush the persistent key"
+@@ -86,11 +86,11 @@ ${PREFIX}evictcontrol -ho 81800000 -hp 81800000 -hi p > run.out
+ checkSuccess $?
+ 
+ echo "Sign a digest with the persistent key - should fail"
+-${PREFIX}sign -hk 81800000 -halg sha1 -if policies/aaa -os sig.bin -pwdk sig > run.out
++${PREFIX}sign -hk 81800000 -halg sha256 -if policies/aaa -os sig.bin -pwdk sig > run.out
+ checkFailure $?
+ 
+ echo "Sign a digest with the transient key - should fail"
+-${PREFIX}sign -hk 80000001 -halg sha1 -if policies/aaa -os sig.bin -pwdk sig > run.out
++${PREFIX}sign -hk 80000001 -halg sha256 -if policies/aaa -os sig.bin -pwdk sig > run.out
+ checkFailure $?
+ 
+ # ${PREFIX}getcapability  -cap 1 -pr 80000000
+diff --git a/utils/regtests/testnv.sh b/utils/regtests/testnv.sh
+index b941f2e..39a9a18 100755
+--- a/utils/regtests/testnv.sh
++++ b/utils/regtests/testnv.sh
+@@ -56,7 +56,7 @@ checkSuccess $?
+ NALG=(${ITERATE_ALGS})
+ BADNALG=(${BAD_ITERATE_ALGS})
+ 
+-for ((i = 0 ; i < 4; i++))
++for ((i = 0 ; i < ${ITERATE_ALGS_COUNT}; i++))
+ do
+ 
+     for SESS in "" "-se0 02000000 1"
+@@ -212,10 +212,10 @@ checkSuccess $?
+ for SESS in "" "-se0 02000000 1"
+ do
+ 
+-    SZ=(20 32 48 64)
++    SZ=(${ITERATE_ALGS_SIZES})
+     HALG=(${ITERATE_ALGS})
+ 
+-    for ((i = 0 ; i < 4; i++))
++    for ((i = 0 ; i < ${ITERATE_ALGS_COUNT}; i++))
+     do
+ 
+ 	echo "NV Define Space ${HALG[$i]}"
+diff --git a/utils/regtests/testpolicy.sh b/utils/regtests/testpolicy.sh
+index e2e8bec..971e67f 100755
+--- a/utils/regtests/testpolicy.sh
++++ b/utils/regtests/testpolicy.sh
+@@ -752,17 +752,17 @@ echo "Policy PCR no select"
+ echo ""
+ 
+ # create AND term for policy PCR
+-# > policymakerpcr -halg sha1 -bm 0 -v -pr -of policies/policypcr.txt
++# > policymakerpcr -halg sha256 -bm 0 -v -pr -of policies/policypcr.txt
+ # 0000017f00000001000403000000da39a3ee5e6b4b0d3255bfef95601890afd80709
+ 
+ # convert to binary policy
+-# > policymaker -halg sha1 -if policies/policypcr.txt -of policies/policypcrbm0.bin -pr -v
++# > policymaker -halg sha256 -if policies/policypcr.txt -of policies/policypcrbm0.bin -pr -v
+ 
+ # 6d 38 49 38 e1 d5 8b 56 71 92 55 94 3f 06 69 66 
+ # b6 fa 2c 23 
+ 
+ echo "Create a signing key with policy PCR no select"
+-${PREFIX}create -hp 80000000 -si -kt f -kt p -opr tmppriv.bin -opu tmppub.bin -pwdp sto -pwdk sig -nalg sha1 -pol policies/policypcrbm0.bin > run.out
++${PREFIX}create -hp 80000000 -si -kt f -kt p -opr tmppriv.bin -opu tmppub.bin -pwdp sto -pwdk sig -nalg sha256 -pol policies/policypcrbm0.bin > run.out
+ checkSuccess $?
+ 
+ echo "Load the signing key under the primary key"
+@@ -770,11 +770,11 @@ ${PREFIX}load -hp 80000000 -ipr tmppriv.bin -ipu tmppub.bin -pwdp sto > run.out
+ checkSuccess $?
+ 
+ echo "Start a policy session"
+-${PREFIX}startauthsession -halg sha1 -se p > run.out
++${PREFIX}startauthsession -halg sha256 -se p > run.out
+ checkSuccess $?
+ 
+ echo "Policy PCR, update with the correct digest"
+-${PREFIX}policypcr -ha 03000000 -halg sha1 -bm 0 > run.out
++${PREFIX}policypcr -ha 03000000 -halg sha256 -bm 0 > run.out
+ checkSuccess $?
+ 
+ echo "Policy get digest - should be 6d 38 49 38 ... "
+@@ -790,11 +790,11 @@ ${PREFIX}policyrestart -ha 03000000 > run.out
+ checkSuccess $?
+ 
+ echo "Policy PCR, update with the correct digest"
+-${PREFIX}policypcr -ha 03000000 -halg sha1 -bm 0 > run.out
++${PREFIX}policypcr -ha 03000000 -halg sha256 -bm 0 > run.out
+ checkSuccess $?
+ 
+ echo "PCR extend PCR 0, updates pcr counter"
+-${PREFIX}pcrextend -ha 0 -halg sha1 -if policies/aaa > run.out
++${PREFIX}pcrextend -ha 0 -halg sha256 -if policies/aaa > run.out
+ checkSuccess $?
+ 
+ echo "Sign, should fail"
+@@ -816,17 +816,17 @@ echo ""
+ # policypcr0.txt has 20 * 00
+ 
+ # create AND term for policy PCR
+-# > policymakerpcr -halg sha1 -bm 010000 -if policies/policypcr0.txt -v -pr -of policies/policypcr.txt
++# > policymakerpcr -halg sha256 -bm 010000 -if policies/policypcr0.txt -v -pr -of policies/policypcr.txt
+ # 0000017f000000010004030000016768033e216468247bd031a0a2d9876d79818f8f
+ 
+ # convert to binary policy
+-# > policymaker -halg sha1 -if policies/policypcr.txt -of policies/policypcr.bin -pr -v
++# > policymaker -halg sha256 -if policies/policypcr.txt -of policies/policypcr.bin -pr -v
+ 
+ # 85 33 11 83 19 03 12 f5 e8 3c 60 43 34 6f 9f 37
+ # 21 04 76 8e
+ 
+ echo "Create a signing key with policy PCR PCR 16 zero"
+-${PREFIX}create -hp 80000000 -si -kt f -kt p -opr tmppriv.bin -opu tmppub.bin -pwdp sto -pwdk sig -nalg sha1 -pol policies/policypcr.bin > run.out
++${PREFIX}create -hp 80000000 -si -kt f -kt p -opr tmppriv.bin -opu tmppub.bin -pwdp sto -pwdk sig -nalg sha256 -pol policies/policypcr.bin > run.out
+ checkSuccess $?
+ 
+ echo "Load the signing key under the primary key"
+@@ -838,11 +838,11 @@ ${PREFIX}pcrreset -ha 16 > run.out
+ checkSuccess $?
+ 
+ echo "Read PCR 16, should be 00 00 00 00 ..."
+-${PREFIX}pcrread -ha 16 -halg sha1 > run.out
++${PREFIX}pcrread -ha 16 -halg sha256 > run.out
+ checkSuccess $?
+ 
+ echo "Start a policy session"
+-${PREFIX}startauthsession -se p -halg sha1 > run.out
++${PREFIX}startauthsession -se p -halg sha256 > run.out
+ checkSuccess $?
+ 
+ echo "Sign, policy not satisfied - should fail"
+@@ -850,7 +850,7 @@ ${PREFIX}sign -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 0 > run.out
+ checkFailure $?
+ 
+ echo "Policy PCR, update with the correct digest"
+-${PREFIX}policypcr -ha 03000000 -halg sha1 -bm 10000 > run.out
++${PREFIX}policypcr -ha 03000000 -halg sha256 -bm 10000 > run.out
+ checkSuccess $?
+ 
+ echo "Policy get digest - should be 85 33 11 83 ..."
+@@ -862,19 +862,19 @@ ${PREFIX}sign -hk 80000001 -if msg.bin -os sig.bin -se0 03000000 0 > run.out
+ checkSuccess $?
+ 
+ echo "PCR extend PCR 16"
+-${PREFIX}pcrextend -ha 16 -halg sha1 -if policies/aaa > run.out
++${PREFIX}pcrextend -ha 16 -halg sha256 -if policies/aaa > run.out
+ checkSuccess $?
+ 
+ echo "Read PCR 0, should be 1d 47 f6 8a ..."
+-${PREFIX}pcrread -ha 16 -halg sha1 > run.out
++${PREFIX}pcrread -ha 16 -halg sha256 > run.out
+ checkSuccess $?
+ 
+ echo "Start a policy session"
+-${PREFIX}startauthsession -se p -halg sha1 > run.out
++${PREFIX}startauthsession -se p -halg sha256 > run.out
+ checkSuccess $?
+ 
+ echo "Policy PCR, update with the wrong digest"
+-${PREFIX}policypcr -ha 03000000 -halg sha1 -bm 10000 > run.out
++${PREFIX}policypcr -ha 03000000 -halg sha256 -bm 10000 > run.out
+ checkSuccess $?
+ 
+ echo "Policy get digest - should be 66 dd e5 e3"
+@@ -903,21 +903,21 @@ checkSuccess $?
+ #
+ # policynvargs.txt (binary)
+ # args = hash of 0000 0000 0000 0000 | 0000 | 0000 (eight bytes of zero | offset | op ==)
+-# hash -hi n -halg sha1 -if policies/policynvargs.txt -v
+-# openssl dgst -sha1 policies/policynvargs.txt
++# hash -hi n -halg sha256 -if policies/policynvargs.txt -v
++# openssl dgst -sha256 policies/policynvargs.txt
+ # 2c513f149e737ec4063fc1d37aee9beabc4b4bbf
+ #
+ # NV authorizing index
+ #
+ # after defining index and NV write to set written, use 
+-# ${PREFIX}nvreadpublic -ha 01000000 -nalg sha1
++# ${PREFIX}nvreadpublic -ha 01000000 -nalg sha256
+ # to get name
+ # 00042234b8df7cdf8605ee0a2088ac7dfe34c6566c5c
+ #
+ # append Name to policynvnv.txt
+ #
+ # convert to binary policy
+-# > policymaker -halg sha1 -if policies/policynvnv.txt -of policies/policynvnv.bin -pr -v
++# > policymaker -halg sha256 -if policies/policynvnv.txt -of policies/policynvnv.bin -pr -v
+ # bc 9b 4c 4f 7b 00 66 19 5b 1d d9 9c 92 7e ad 57 e7 1c 2a fc 
+ #
+ # file zero8.bin has 8 bytes of hex zero
+@@ -927,11 +927,11 @@ echo "Policy NV, NV index authorizing"
+ echo ""
+ 
+ echo "Define a setbits index, authorizing index"
+-${PREFIX}nvdefinespace -hi p -nalg sha1 -ha 01000000 -pwdn nnn -ty b > run.out
++${PREFIX}nvdefinespace -hi p -nalg sha256 -ha 01000000 -pwdn nnn -ty b > run.out
+ checkSuccess $?
+ 
+ echo "NV Read public, get Name, not written"
+-${PREFIX}nvreadpublic -ha 01000000 -nalg sha1 > run.out
++${PREFIX}nvreadpublic -ha 01000000 -nalg sha256 > run.out
+ checkSuccess $?
+ 
+ echo "NV setbits to set written"
+@@ -939,7 +939,7 @@ ${PREFIX}nvsetbits -ha 01000000 -pwdn nnn > run.out
+ checkSuccess $?
+ 
+ echo "NV Read public, get Name, written"
+-${PREFIX}nvreadpublic -ha 01000000 -nalg sha1 > run.out
++${PREFIX}nvreadpublic -ha 01000000 -nalg sha256 > run.out
+ checkSuccess $?
+ 
+ echo "NV Read, should be zero"
+@@ -947,11 +947,11 @@ ${PREFIX}nvread -ha 01000000 -pwdn nnn -sz 8 > run.out
+ checkSuccess $?
+ 
+ echo "Define an ordinary index, authorized index, policyNV"
+-${PREFIX}nvdefinespace -hi p -nalg sha1 -ha 01000001 -pwdn nnn -sz 2 -ty o -pol policies/policynvnv.bin > run.out
++${PREFIX}nvdefinespace -hi p -nalg sha256 -ha 01000001 -pwdn nnn -sz 2 -ty o -pol policies/policynvnv.bin > run.out
+ checkSuccess $?
+ 
+ echo "NV Read public, get Name, not written"
+-${PREFIX}nvreadpublic -ha 01000001 -nalg sha1 > run.out
++${PREFIX}nvreadpublic -ha 01000001 -nalg sha256 > run.out
+ checkSuccess $?
+ 
+ echo "NV write to set written"
+@@ -959,7 +959,7 @@ ${PREFIX}nvwrite -ha 01000001 -pwdn nnn -ic aa > run.out
+ checkSuccess $?
+ 
+ echo "Start policy session"
+-${PREFIX}startauthsession -se p -halg sha1 > run.out
++${PREFIX}startauthsession -se p -halg sha256 > run.out
+ checkSuccess $?
+  
+ echo "NV write, policy not satisfied  - should fail"
+@@ -1015,15 +1015,15 @@ echo "Policy NV Written"
+ echo ""
+ 
+ echo "Define an ordinary index, authorized index, policyNV"
+-${PREFIX}nvdefinespace -hi p -nalg sha1 -ha 01000000 -pwdn nnn -sz 2 -ty o -pol policies/policywrittenset.bin > run.out  
++${PREFIX}nvdefinespace -hi p -nalg sha256 -ha 01000000 -pwdn nnn -sz 2 -ty o -pol policies/policywrittenset.bin > run.out
+ checkSuccess $?
+ 
+ echo "NV Read public, get Name, not written"
+-${PREFIX}nvreadpublic -ha 01000000 -nalg sha1 > run.out  
++${PREFIX}nvreadpublic -ha 01000000 -nalg sha256 > run.out
+ checkSuccess $?
+ 
+ echo "Start policy session"
+-${PREFIX}startauthsession -se p -halg sha1 > run.out
++${PREFIX}startauthsession -se p -halg sha256 > run.out
+ checkSuccess $?
+  
+ echo "NV write, policy not satisfied  - should fail"
+@@ -1043,7 +1043,7 @@ ${PREFIX}flushcontext -ha 03000000 > run.out
+ checkSuccess $?
+ 
+ echo "Start policy session"
+-${PREFIX}startauthsession -se p -halg sha1 > run.out
++${PREFIX}startauthsession -se p -halg sha256 > run.out
+ checkSuccess $?
+ 
+ echo "Policy NV Written yes, satisfy policy"
+@@ -1063,7 +1063,7 @@ ${PREFIX}nvwrite -ha 01000000 -ic aa -pwdn nnn > run.out
+ checkSuccess $?
+ 
+ echo "Start policy session"
+-${PREFIX}startauthsession -se p -halg sha1 > run.out
++${PREFIX}startauthsession -se p -halg sha256 > run.out
+ checkSuccess $?
+ 
+ echo "Policy NV Written yes, satisfy policy"
+@@ -1079,7 +1079,7 @@ ${PREFIX}flushcontext -ha 03000000 > run.out
+ checkSuccess $?
+ 
+ echo "Start policy session"
+-${PREFIX}startauthsession -se p -halg sha1 > run.out
++${PREFIX}startauthsession -se p -halg sha256 > run.out
+ checkSuccess $?
+ 
+ echo "Policy NV Written no"
+@@ -1326,12 +1326,12 @@ checkSuccess $?
+ 
+ # test using clockrateadjust
+ # policycphashhash.txt is (hex) 00000130 4000000c 000
+-# hash -if policycphashhash.txt -oh policycphashhash.bin -halg sha1 -v
+-# openssl dgst -sha1 policycphashhash.txt
++# hash -if policycphashhash.txt -oh policycphashhash.bin -halg sha256 -v
++# openssl dgst -sha256 policycphashhash.txt
+ # cpHash is
+ # b5f919bbc01f0ebad02010169a67a8c158ec12f3
+ # append to policycphash.txt 00000163 + cpHash
+-# policymaker -halg sha1 -if policies/policycphash.txt -of policies/policycphash.bin -pr
++# policymaker -halg sha256 -if policies/policycphash.txt -of policies/policycphash.bin -pr
+ #  06 e4 6c f9 f3 c7 0f 30 10 18 7c a6 72 69 b0 84 b4 52 11 6f 
+ 
+ echo ""
+@@ -1339,7 +1339,7 @@ echo "Policy cpHash"
+ echo ""
+ 
+ echo "Set the platform policy to policy cpHash"
+-${PREFIX}setprimarypolicy -hi p -pol policies/policycphash.bin -halg sha1 > run.out
++${PREFIX}setprimarypolicy -hi p -pol policies/policycphash.bin -halg sha256 > run.out
+ checkSuccess $?
+ 
+ echo "Clockrate adjust using wrong password - should fail"
+@@ -1347,7 +1347,7 @@ ${PREFIX}clockrateadjust -hi p -pwdp ppp -adj 0 > run.out
+ checkFailure $?
+ 
+ echo "Start policy session"
+-${PREFIX}startauthsession -se p -halg sha1 > run.out 
++${PREFIX}startauthsession -se p -halg sha256 > run.out
+ checkSuccess $?
+ 
+ echo "Clockrate adjust, policy not satisfied - should fail"
+@@ -1690,7 +1690,7 @@ echo "Policy Counter Timer"
+ echo ""
+ 
+ echo "Set the platform policy to policy "
+-${PREFIX}setprimarypolicy -hi p -pol policies/policycountertimer.bin -halg sha1 > run.out
++${PREFIX}setprimarypolicy -hi p -pol policies/policycountertimer.bin -halg sha256 > run.out
+ checkSuccess $?
+ 
+ echo "Clockrate adjust using wrong password - should fail"
+@@ -1698,7 +1698,7 @@ ${PREFIX}clockrateadjust -hi p -pwdp ppp -adj 0 > run.out
+ checkFailure $?
+ 
+ echo "Start policy session"
+-${PREFIX}startauthsession -se p -halg sha1 > run.out
++${PREFIX}startauthsession -se p -halg sha256 > run.out
+ checkSuccess $?
+ 
+ echo "Clockrate adjust, policy not satisfied - should fail"
+diff --git a/utils/regtests/testrsa.sh b/utils/regtests/testrsa.sh
+index 4f76522..6e25398 100755
+--- a/utils/regtests/testrsa.sh
++++ b/utils/regtests/testrsa.sh
+@@ -131,10 +131,10 @@ do
+     ${PREFIX}load -hp 80000000 -ipu derrsa${BITS}pub.bin -ipr derrsa${BITS}priv.bin -pwdp sto > run.out
+     checkSuccess $?
+ 
++    HSIZ=(${ITERATE_ALGS_SIZES})
+     HALG=(${ITERATE_ALGS})
+-    HSIZ=("20" "32" "48" "64")
+ 
+-    for ((i = 0 ; i < 4 ; i++))
++    for ((i = 0 ; i < ${ITERATE_ALGS_COUNT} ; i++))
+     do
+ 
+ 	echo "Decrypt/Sign with a caller specified OID - ${HALG[i]}"
+@@ -298,7 +298,7 @@ echo "Encrypt with OpenSSL OAEP, decrypt with TPM"
+ echo ""
+ 
+ echo "Create OAEP encryption key"
+-${PREFIX}create -hp 80000000 -pwdp sto -deo -kt f -kt p -halg sha1 -opr tmpprivkey.bin -opu tmppubkey.bin -opem tmppubkey.pem > run.out	
++${PREFIX}create -hp 80000000 -pwdp sto -deo -kt f -kt p -halg sha256 -opr tmpprivkey.bin -opu tmppubkey.bin -opem tmppubkey.pem > run.out
+ checkSuccess $?
+ 
+ echo "Load encryption key at 80000001"
+@@ -306,7 +306,7 @@ ${PREFIX}load -hp 80000000 -pwdp sto -ipr tmpprivkey.bin -ipu tmppubkey.bin  > r
+ checkSuccess $?
+ 
+ echo "Encrypt using OpenSSL and the PEM public key"
+-openssl rsautl -oaep -encrypt -inkey tmppubkey.pem -pubin -in policies/aaa -out enc.bin > run.out 2>&1
++openssl pkeyutl -encrypt -inkey tmppubkey.pem -pubin -pkeyopt rsa_padding_mode:oaep -pkeyopt rsa_oaep_md:sha256 -in policies/aaa -out enc.bin > run.out 2>&1
+ checkSuccess $?
+ 
+ echo "Decrypt using TPM key at 80000001"
+diff --git a/utils/regtests/testsign.sh b/utils/regtests/testsign.sh
+index edfa014..8a99bbf 100755
+--- a/utils/regtests/testsign.sh
++++ b/utils/regtests/testsign.sh
+@@ -302,14 +302,14 @@ echo ""
+ # > openssl dgst -sha1 -sign rsaprivkey.pem -passin pass:rrrr -out pssig.bin msg.bin
+ 
+ echo "Load external just the public part of PEM RSA"
+-${PREFIX}loadexternal -halg sha1 -nalg sha1 -ipem policies/rsapubkey.pem > run.out
++${PREFIX}loadexternal -halg sha256 -nalg sha256 -ipem policies/rsapubkey.pem > run.out
+ checkSuccess $?
+ 
+ echo "Sign a test message with openssl RSA"
+-openssl dgst -sha1 -sign policies/rsaprivkey.pem -passin pass:rrrr -out pssig.bin msg.bin > run.out 2>&1
++openssl dgst -sha256 -sign policies/rsaprivkey.pem -passin pass:rrrr -out pssig.bin msg.bin > run.out 2>&1
+ 
+ echo "Verify the RSA signature"
+-${PREFIX}verifysignature -hk 80000001 -halg sha1 -if msg.bin -is pssig.bin -raw > run.out
++${PREFIX}verifysignature -hk 80000001 -halg sha256 -if msg.bin -is pssig.bin -raw > run.out
+ checkSuccess $?
+ 
+ echo "Flush the signing key"
+@@ -328,14 +328,14 @@ for CURVE in p256 p384
+ do
+ 
+     echo "Load external just the public part of PEM ECC ${CURVE}"
+-    ${PREFIX}loadexternal -halg sha1 -nalg sha1 -ipem policies/${CURVE}pubkey.pem -ecc > run.out
++    ${PREFIX}loadexternal -halg sha256 -nalg sha256 -ipem policies/${CURVE}pubkey.pem -ecc > run.out
+     checkSuccess $?
+ 
+     echo "Sign a test message with openssl ECC ${CURVE}"
+-    openssl dgst -sha1 -sign policies/${CURVE}privkey.pem -out pssig.bin msg.bin > run.out 2>&1
++    openssl dgst -sha256 -sign policies/${CURVE}privkey.pem -out pssig.bin msg.bin > run.out 2>&1
+ 
+     echo "Verify the ECC signature ${CURVE}"
+-    ${PREFIX}verifysignature -hk 80000001 -halg sha1 -if msg.bin -is pssig.bin -raw -ecc > run.out
++    ${PREFIX}verifysignature -hk 80000001 -halg sha256 -if msg.bin -is pssig.bin -raw -ecc > run.out
+     checkSuccess $?
+ 
+     echo "Flush the ECC ${CURVE} signing key"
+-- 
+2.34.3
+

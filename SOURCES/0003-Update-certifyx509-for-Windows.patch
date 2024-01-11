@@ -1,0 +1,99 @@
+From 1c462889a517d6dbab721aa3e0597878e9c237d5 Mon Sep 17 00:00:00 2001
+From: Ken Goldman <kgold@linux.ibm.com>
+Date: Wed, 25 Aug 2021 18:02:11 -0400
+Subject: [PATCH 3/7] : Update certifyx509 for Windows
+
+Add static_ to the ASN1_SEQUENCE_END macros to suppress a gcc warning.
+Change free to OPENSSL_free, required with i2d when OpenSSL is a dll.
+
+Remove the tmpx509i file handling from the .bat file since certifyx509
+no longer outputs it.
+
+Signed-off-by: Ken Goldman <kgold@linux.ibm.com>
+---
+ utils/certifyx509.c         | 10 +++++-----
+ utils/regtests/testx509.bat |  5 -----
+ 2 files changed, 5 insertions(+), 10 deletions(-)
+
+diff --git a/utils/certifyx509.c b/utils/certifyx509.c
+index 44640aa..5602f62 100644
+--- a/utils/certifyx509.c
++++ b/utils/certifyx509.c
+@@ -94,7 +94,7 @@ typedef struct {
+ ASN1_SEQUENCE(TPM_PARTIAL_CERT_VALIDITY) = {
+     ASN1_SIMPLE(TPM_PARTIAL_CERT_VALIDITY, notBefore, ASN1_TIME),
+     ASN1_SIMPLE(TPM_PARTIAL_CERT_VALIDITY, notAfter, ASN1_TIME),
+-} ASN1_SEQUENCE_END(TPM_PARTIAL_CERT_VALIDITY)
++} static_ASN1_SEQUENCE_END(TPM_PARTIAL_CERT_VALIDITY)
+ 
+ /* the signature algorithm is optional while the extension list is mandatory */
+ ASN1_SEQUENCE(TPM_PARTIAL_CERT) = {
+@@ -103,7 +103,7 @@ ASN1_SEQUENCE(TPM_PARTIAL_CERT) = {
+     ASN1_SIMPLE(TPM_PARTIAL_CERT, validity, TPM_PARTIAL_CERT_VALIDITY),
+     ASN1_SIMPLE(TPM_PARTIAL_CERT, subject, X509_NAME),
+     ASN1_EXP_SEQUENCE_OF(TPM_PARTIAL_CERT, extensions, X509_EXTENSION, 3),
+-} ASN1_SEQUENCE_END(TPM_PARTIAL_CERT)
++} static_ASN1_SEQUENCE_END(TPM_PARTIAL_CERT)
+ 
+ DECLARE_ASN1_FUNCTIONS(TPM_PARTIAL_CERT)
+ IMPLEMENT_ASN1_FUNCTIONS(TPM_PARTIAL_CERT)
+@@ -122,7 +122,7 @@ ASN1_SEQUENCE(TPM_ADDTOCERT) = {
+     ASN1_SIMPLE(TPM_ADDTOCERT, serialNumber, ASN1_INTEGER),
+     ASN1_SIMPLE(TPM_ADDTOCERT, signatureAlgorithm, X509_ALGOR),
+     ASN1_SIMPLE(TPM_ADDTOCERT, key, X509_PUBKEY),
+-} ASN1_SEQUENCE_END(TPM_ADDTOCERT)
++} static_ASN1_SEQUENCE_END(TPM_ADDTOCERT)
+ 
+ DECLARE_ASN1_FUNCTIONS(TPM_ADDTOCERT)
+ IMPLEMENT_ASN1_FUNCTIONS(TPM_ADDTOCERT)
+@@ -629,7 +629,7 @@ int main(int argc, char *argv[])
+ 	X509_free(x509Certificate);			/* @1 */
+     }
+     free(x509Der);					/* @2 */
+-    free(addToCert);					/* @3 */
++    OPENSSL_free(addToCert);				/* @3 */
+     return rc;
+ }
+ 
+@@ -808,7 +808,7 @@ TPM_RC createPartialCertificate(TPM_PARTIAL_CERT *partialCertificate,	/* input /
+ #endif
+     X509_NAME_free(x509IssuerName);	/* @1 */
+     X509_NAME_free(x509SubjectName);	/* @2 */
+-    free(tmpPartialDer);		/* @3 */
++    OPENSSL_free(tmpPartialDer);	/* @3 */
+     return rc;
+ }
+ 
+diff --git a/utils/regtests/testx509.bat b/utils/regtests/testx509.bat
+index 0951ad6..17b69f6 100644
+--- a/utils/regtests/testx509.bat
++++ b/utils/regtests/testx509.bat
+@@ -80,8 +80,6 @@ for /L %%i in (1,1,!L!) do (
+ 	exit /B 1
+     )
+ 
+-    rem # dumpasn1 -a -l -d     tmpx509i.bin > tmpx509i1.dump
+-    rem # dumpasn1 -a -l -d -hh tmpx509i.bin > tmpx509i1.dumphh
+     rem # dumpasn1 -a -l -d     tmppart1.bin > tmppart1.dump
+     rem # dumpasn1 -a -l -d -hh tmppart1.bin > tmppart1.dumphh
+     rem # dumpasn1 -a -l -d     tmpadd1.bin  > tmpadd1.dump
+@@ -102,8 +100,6 @@ for /L %%i in (1,1,!L!) do (
+ 	exit /B 1
+     )
+ 
+-rem     # dumpasn1 -a -l -d     tmpx509i.bin > tmpx509i2.dump
+-rem     # dumpasn1 -a -l -d -hh tmpx509i.bin > tmpx509i2.dumphh
+ rem     # dumpasn1 -a -l -d     tmppart2.bin > tmppart2.dump
+ rem     # dumpasn1 -a -l -d -hh tmppart2.bin > tmppart2.dumphhe 
+ rem     # dumpasn1 -a -l -d     tmpadd2.bin  > tmpadd2.dump
+@@ -446,7 +442,6 @@ rm tmpsig1.bin
+ rm tmpx5091.bin
+ rm tmpx5091.pem
+ rm tmpx5092.pem
+-rm tmpx509i.bin
+ rm tmppart2.bin
+ rm tmpadd2.bin
+ rm tmptbs2.bin
+-- 
+2.34.1
+

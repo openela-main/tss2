@@ -1,0 +1,91 @@
+From bcbc2f0400cfc2f596283e8c528aed4576bfea69 Mon Sep 17 00:00:00 2001
+From: Ken Goldman <kgold@linux.ibm.com>
+Date: Fri, 3 Sep 2021 14:58:20 -0400
+Subject: [PATCH 5/7] utils: Fix errors detected by gcc asan
+
+In Uint32_Convert(), case the byte to uint32_t before the left shift
+24 to suppress a warning.
+
+In TSS_EFI_GetNameIndex(), do not compare data if the length does not
+match, because this could cause a buffer overflow.  Test should be &&,
+not &.
+
+TSS_Delete should only memset sessionData if the pointer is not NULL.
+
+Signed-off-by: Ken Goldman <kgold@linux.ibm.com>
+---
+ utils/efilib.c   | 11 +++++++----
+ utils/eventlib.c | 10 +++++-----
+ utils/tss.c      |  6 ++++--
+ 3 files changed, 16 insertions(+), 11 deletions(-)
+
+diff --git a/utils/efilib.c b/utils/efilib.c
+index 201a1f5..ab8177b 100644
+--- a/utils/efilib.c
++++ b/utils/efilib.c
+@@ -399,16 +399,19 @@ static void TSS_EFI_GetNameIndex(size_t *index,
+ 				 const uint8_t *name,
+ 				 uint64_t nameLength)	/* half the total bytes in array */
+ {
+-    int m1,m2;
++    int m1 = 0;
++    int m2 = 0;
+     for (*index = 0 ;
+ 	 *index < sizeof(tagTable) / sizeof(TAG_TABLE)  ;
+ 	 (*index)++) {
+ 
+ 	/* length match */
+ 	m1 = (nameLength * 2) == tagTable[*index].nameLength;
+-	/* string match */
+-	m2 = memcmp(name, tagTable[*index].name, (size_t)(nameLength * 2)) == 0;
+-	if (m1 & m2) {
++	if (m1) {
++	    /* string match */
++	    m2 = memcmp(name, tagTable[*index].name, (size_t)(nameLength * 2)) == 0;
++	}
++	if (m1 && m2) {
+ 	    return;
+ 	}
+     }
+diff --git a/utils/eventlib.c b/utils/eventlib.c
+index 0c2801c..c56a22f 100644
+--- a/utils/eventlib.c
++++ b/utils/eventlib.c
+@@ -1346,12 +1346,12 @@ static uint32_t Uint32_Convert(uint32_t in)
+ {
+     uint32_t out = 0;
+     unsigned char *inb = (unsigned char *)&in;
+-    
++
+     /* little endian input */
+-    out = (inb[0] <<  0) |
+-	  (inb[1] <<  8) |
+-	  (inb[2] << 16) |
+-	  (inb[3] << 24);
++    out = ((((uint32_t)inb[0]) <<  0) |
++	   (((uint32_t)inb[1]) <<  8) |
++	   (((uint32_t)inb[2]) << 16) |
++	   (((uint32_t)inb[3]) << 24));
+     return out;
+ }
+ #endif /* TPM_TSS_NOFILE */
+diff --git a/utils/tss.c b/utils/tss.c
+index 574c448..6f0eede 100644
+--- a/utils/tss.c
++++ b/utils/tss.c
+@@ -179,8 +179,10 @@ TPM_RC TSS_Delete(TSS_CONTEXT *tssContext)
+ 	    for (i = 0 ; i < (sizeof(tssContext->sessions) / sizeof(TSS_SESSIONS)) ; i++) {
+ 		tssContext->sessions[i].sessionHandle = TPM_RH_NULL;
+ 		/* erase any secrets */
+-		memset(tssContext->sessions[i].sessionData,
+-		       0, tssContext->sessions[i].sessionDataLength);
++		if (tssContext->sessions[i].sessionData != NULL) {
++		    memset(tssContext->sessions[i].sessionData,
++			   0, tssContext->sessions[i].sessionDataLength);
++		}
+ 		free(tssContext->sessions[i].sessionData);
+ 		tssContext->sessions[i].sessionData = NULL;
+ 		tssContext->sessions[i].sessionDataLength = 0;
+-- 
+2.34.1
+

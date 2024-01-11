@@ -1,0 +1,593 @@
+From df5038caa1785d2661d283e6eeb1d6d5184d5272 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?=C5=A0t=C4=9Bp=C3=A1n=20Hor=C3=A1=C4=8Dek?=
+ <shoracek@redhat.com>
+Date: Mon, 2 May 2022 23:51:15 +0200
+Subject: [PATCH 4/4] man: Include information about possible hash restriction
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Štěpán Horáček <shoracek@redhat.com>
+Signed-off-by: Ken Goldman <kgold@linux.ibm.com>
+---
+ utils/certify.c                               | 2 ++
+ utils/certifycreation.c                       | 2 ++
+ utils/create.c                                | 2 ++
+ utils/createloaded.c                          | 2 ++
+ utils/createprimary.c                         | 2 ++
+ utils/getcommandauditdigest.c                 | 2 ++
+ utils/getsessionauditdigest.c                 | 2 ++
+ utils/gettime.c                               | 2 ++
+ utils/hash.c                                  | 2 ++
+ utils/hashsequencestart.c                     | 2 ++
+ utils/hmac.c                                  | 2 ++
+ utils/hmacstart.c                             | 2 ++
+ utils/importpem.c                             | 2 ++
+ utils/loadexternal.c                          | 2 ++
+ utils/man/man1/tsscertify.1                   | 2 ++
+ utils/man/man1/tsscertifycreation.1           | 2 ++
+ utils/man/man1/tsscreate.1                    | 2 ++
+ utils/man/man1/tsscreateloaded.1              | 2 ++
+ utils/man/man1/tsscreateprimary.1             | 2 ++
+ utils/man/man1/tssgetcommandauditdigest.1     | 2 ++
+ utils/man/man1/tssgetsessionauditdigest.1     | 2 ++
+ utils/man/man1/tssgettime.1                   | 2 ++
+ utils/man/man1/tsshash.1                      | 2 ++
+ utils/man/man1/tsshashsequencestart.1         | 2 ++
+ utils/man/man1/tsshmac.1                      | 2 ++
+ utils/man/man1/tsshmacstart.1                 | 2 ++
+ utils/man/man1/tssimportpem.1                 | 2 ++
+ utils/man/man1/tssloadexternal.1              | 2 ++
+ utils/man/man1/tssnvcertify.1                 | 2 ++
+ utils/man/man1/tssnvdefinespace.1             | 2 ++
+ utils/man/man1/tsspolicysigned.1              | 2 ++
+ utils/man/man1/tssquote.1                     | 2 ++
+ utils/man/man1/tssrsadecrypt.1                | 2 ++
+ utils/man/man1/tsssetcommandcodeauditstatus.1 | 2 ++
+ utils/man/man1/tsssetprimarypolicy.1          | 2 ++
+ utils/man/man1/tsssign.1                      | 2 ++
+ utils/man/man1/tssstartauthsession.1          | 2 ++
+ utils/man/man1/tssverifysignature.1           | 2 ++
+ utils/nvcertify.c                             | 2 ++
+ utils/nvdefinespace.c                         | 2 ++
+ utils/policysigned.c                          | 2 ++
+ utils/quote.c                                 | 2 ++
+ utils/rsadecrypt.c                            | 2 ++
+ utils/setcommandcodeauditstatus.c             | 2 ++
+ utils/setprimarypolicy.c                      | 2 ++
+ utils/sign.c                                  | 2 ++
+ utils/startauthsession.c                      | 2 ++
+ utils/verifysignature.c                       | 2 ++
+ 48 files changed, 96 insertions(+)
+
+diff --git a/utils/certify.c b/utils/certify.c
+index f1f54d0..f9a07c5 100644
+--- a/utils/certify.c
++++ b/utils/certify.c
+@@ -407,5 +407,7 @@ static void printUsage(void)
+     printf("\t01\tcontinue\n");
+     printf("\t20\tcommand decrypt\n");
+     printf("\t40\tresponse encrypt\n");
++    printf("\n");
++    printf("Depending on the build configuration, some hash algorithms may not be available.\n");
+     exit(1);	
+ }
+diff --git a/utils/certifycreation.c b/utils/certifycreation.c
+index ab54c0a..b4fa095 100644
+--- a/utils/certifycreation.c
++++ b/utils/certifycreation.c
+@@ -449,5 +449,7 @@ static void printUsage(void)
+     printf("\t01\tcontinue\n");
+     printf("\t20\tcommand decrypt\n");
+     printf("\t40\tresponse encrypt\n");
++    printf("\n");
++    printf("Depending on the build configuration, some hash algorithms may not be available.\n");
+     exit(1);	
+ }
+diff --git a/utils/create.c b/utils/create.c
+index a8b805c..880af28 100644
+--- a/utils/create.c
++++ b/utils/create.c
+@@ -710,5 +710,7 @@ static void printUsage(void)
+     printf("\t01\tcontinue\n");
+     printf("\t20\tcommand decrypt\n");
+     printf("\t40\tresponse encrypt\n");
++    printf("\n");
++    printf("Depending on the build configuration, some hash algorithms may not be available.\n");
+     exit(1);	
+ }
+diff --git a/utils/createloaded.c b/utils/createloaded.c
+index d54f791..5bcf69e 100644
+--- a/utils/createloaded.c
++++ b/utils/createloaded.c
+@@ -628,5 +628,7 @@ static void printUsage(void)
+     printf("\t01\tcontinue\n");
+     printf("\t20\tcommand decrypt\n");
+     printf("\t40\tresponse encrypt\n");
++    printf("\n");
++    printf("Depending on the build configuration, some hash algorithms may not be available.\n");
+     exit(1);	
+ }
+diff --git a/utils/createprimary.c b/utils/createprimary.c
+index 52ae083..81cc91d 100644
+--- a/utils/createprimary.c
++++ b/utils/createprimary.c
+@@ -799,5 +799,7 @@ static void printUsage(void)
+     printf("\t01\tcontinue\n");
+     printf("\t20\tcommand decrypt\n");
+     printf("\t40\tresponse encrypt\n");
++    printf("\n");
++    printf("Depending on the build configuration, some hash algorithms may not be available.\n");
+     exit(1);	
+ }
+diff --git a/utils/getcommandauditdigest.c b/utils/getcommandauditdigest.c
+index a219785..6412d90 100644
+--- a/utils/getcommandauditdigest.c
++++ b/utils/getcommandauditdigest.c
+@@ -391,5 +391,7 @@ static void printUsage(void)
+     printf("\t01\tcontinue\n");
+     printf("\t20\tcommand decrypt\n");
+     printf("\t40\tresponse encrypt\n");
++    printf("\n");
++    printf("Depending on the build configuration, some hash algorithms may not be available.\n");
+     exit(1);	
+ }
+diff --git a/utils/getsessionauditdigest.c b/utils/getsessionauditdigest.c
+index 61b12e6..4138bc7 100644
+--- a/utils/getsessionauditdigest.c
++++ b/utils/getsessionauditdigest.c
+@@ -387,5 +387,7 @@ static void printUsage(void)
+     printf("\t01\tcontinue\n");
+     printf("\t20\tcommand decrypt\n");
+     printf("\t40\tresponse encrypt\n");
++    printf("\n");
++    printf("Depending on the build configuration, some hash algorithms may not be available.\n");
+     exit(1);	
+ }
+diff --git a/utils/gettime.c b/utils/gettime.c
+index b07baf1..547faa9 100644
+--- a/utils/gettime.c
++++ b/utils/gettime.c
+@@ -391,5 +391,7 @@ static void printUsage(void)
+     printf("\t01\tcontinue\n");
+     printf("\t20\tcommand decrypt\n");
+     printf("\t40\tresponse encrypt\n");
++    printf("\n");
++    printf("Depending on the build configuration, some hash algorithms may not be available.\n");
+     exit(1);	
+ }
+diff --git a/utils/hash.c b/utils/hash.c
+index 71b8a7c..5a0df6a 100644
+--- a/utils/hash.c
++++ b/utils/hash.c
+@@ -306,5 +306,7 @@ static void printUsage(void)
+     printf("\t[-ns\tno space, no text, no newlines]\n");
+     printf("\t[-oh\thash file name (default do not save)]\n");
+     printf("\t[-tk\tticket file name (default do not save)]\n");
++    printf("\n");
++    printf("Depending on the build configuration, some hash algorithms may not be available.\n");
+     exit(1);	
+ }
+diff --git a/utils/hashsequencestart.c b/utils/hashsequencestart.c
+index d54fadd..88d15fc 100644
+--- a/utils/hashsequencestart.c
++++ b/utils/hashsequencestart.c
+@@ -249,5 +249,7 @@ static void printUsage(void)
+     printf("\t-se[0-2] session handle / attributes (default NULL)\n");
+     printf("\t01\tcontinue\n");
+     printf("\t20\tcommand decrypt\n");
++    printf("\n");
++    printf("Depending on the build configuration, some hash algorithms may not be available.\n");
+     exit(1);	
+ }
+diff --git a/utils/hmac.c b/utils/hmac.c
+index be63e1b..7ab2b34 100644
+--- a/utils/hmac.c
++++ b/utils/hmac.c
+@@ -352,5 +352,7 @@ static void printUsage(void)
+     printf("\t01\tcontinue\n");
+     printf("\t20\tcommand decrypt\n");
+     printf("\t40\tresponse encrypt\n");
++    printf("\n");
++    printf("Depending on the build configuration, some hash algorithms may not be available.\n");
+     exit(1);	
+ }
+diff --git a/utils/hmacstart.c b/utils/hmacstart.c
+index 3fdd0f9..171af6c 100644
+--- a/utils/hmacstart.c
++++ b/utils/hmacstart.c
+@@ -274,5 +274,7 @@ static void printUsage(void)
+     printf("\n");
+     printf("\t-se[0-2] session handle / attributes (default PWAP)\n");
+     printf("\t01\tcontinue\n");
++    printf("\n");
++    printf("Depending on the build configuration, some hash algorithms may not be available.\n");
+     exit(1);	
+ }
+diff --git a/utils/importpem.c b/utils/importpem.c
+index 38ad125..75c8cb2 100644
+--- a/utils/importpem.c
++++ b/utils/importpem.c
+@@ -486,5 +486,7 @@ static void printUsage(void)
+     printf("\t01\tcontinue\n");
+     printf("\t20\tcommand decrypt\n");
+     printf("\t40\tresponse encrypt\n");
++    printf("\n");
++    printf("Depending on the build configuration, some hash algorithms may not be available.\n");
+     exit(1);	
+ }
+diff --git a/utils/loadexternal.c b/utils/loadexternal.c
+index 877501c..ff4b46f 100644
+--- a/utils/loadexternal.c
++++ b/utils/loadexternal.c
+@@ -538,5 +538,7 @@ static void printUsage(void)
+     printf("\t20\tcommand decrypt\n");
+     printf("\t40\tresponse encrypt\n");
+     printf("\t80\taudit\n");
++    printf("\n");
++    printf("Depending on the build configuration, some hash algorithms may not be available.\n");
+     exit(1);	
+ }
+diff --git a/utils/man/man1/tsscertify.1 b/utils/man/man1/tsscertify.1
+index 6895ee7..7b34e2f 100644
+--- a/utils/man/man1/tsscertify.1
++++ b/utils/man/man1/tsscertify.1
+@@ -44,3 +44,5 @@ command decrypt
+ .TP
+ 40
+ response encrypt
++.PP
++Depending on the build configuration, some hash algorithms may not be available.
+diff --git a/utils/man/man1/tsscertifycreation.1 b/utils/man/man1/tsscertifycreation.1
+index 4382ed9..5f51d05 100644
+--- a/utils/man/man1/tsscertifycreation.1
++++ b/utils/man/man1/tsscertifycreation.1
+@@ -47,3 +47,5 @@ command decrypt
+ .TP
+ 40
+ response encrypt
++.PP
++Depending on the build configuration, some hash algorithms may not be available.
+diff --git a/utils/man/man1/tsscreate.1 b/utils/man/man1/tsscreate.1
+index b4eda75..92f53a7 100644
+--- a/utils/man/man1/tsscreate.1
++++ b/utils/man/man1/tsscreate.1
+@@ -125,3 +125,5 @@ command decrypt
+ .TP
+ 40
+ response encrypt
++.PP
++Depending on the build configuration, some hash algorithms may not be available.
+diff --git a/utils/man/man1/tsscreateloaded.1 b/utils/man/man1/tsscreateloaded.1
+index ccd3d73..7e6c422 100644
+--- a/utils/man/man1/tsscreateloaded.1
++++ b/utils/man/man1/tsscreateloaded.1
+@@ -126,3 +126,5 @@ command decrypt
+ .TP
+ 40
+ response encrypt
++.PP
++Depending on the build configuration, some hash algorithms may not be available.
+diff --git a/utils/man/man1/tsscreateprimary.1 b/utils/man/man1/tsscreateprimary.1
+index 895a42e..c189f17 100644
+--- a/utils/man/man1/tsscreateprimary.1
++++ b/utils/man/man1/tsscreateprimary.1
+@@ -129,3 +129,5 @@ command decrypt
+ .TP
+ 40
+ response encrypt
++.PP
++Depending on the build configuration, some hash algorithms may not be available.
+diff --git a/utils/man/man1/tssgetcommandauditdigest.1 b/utils/man/man1/tssgetcommandauditdigest.1
+index 34711e0..e67adac 100644
+--- a/utils/man/man1/tssgetcommandauditdigest.1
++++ b/utils/man/man1/tssgetcommandauditdigest.1
+@@ -41,3 +41,5 @@ command decrypt
+ .TP
+ 40
+ response encrypt
++.PP
++Depending on the build configuration, some hash algorithms may not be available.
+diff --git a/utils/man/man1/tssgetsessionauditdigest.1 b/utils/man/man1/tssgetsessionauditdigest.1
+index d09c78b..272127e 100644
+--- a/utils/man/man1/tssgetsessionauditdigest.1
++++ b/utils/man/man1/tssgetsessionauditdigest.1
+@@ -44,3 +44,5 @@ command decrypt
+ .TP
+ 40
+ response encrypt
++.PP
++Depending on the build configuration, some hash algorithms may not be available.
+diff --git a/utils/man/man1/tssgettime.1 b/utils/man/man1/tssgettime.1
+index bec0627..1cb46f6 100644
+--- a/utils/man/man1/tssgettime.1
++++ b/utils/man/man1/tssgettime.1
+@@ -41,3 +41,5 @@ command decrypt
+ .TP
+ 40
+ response encrypt
++.PP
++Depending on the build configuration, some hash algorithms may not be available.
+diff --git a/utils/man/man1/tsshash.1 b/utils/man/man1/tsshash.1
+index 6eff929..0a9c54e 100644
+--- a/utils/man/man1/tsshash.1
++++ b/utils/man/man1/tsshash.1
+@@ -28,3 +28,5 @@ hash file name (default do not save)]
+ .TP
+ [\-tk
+ ticket file name (default do not save)]
++.PP
++Depending on the build configuration, some hash algorithms may not be available.
+diff --git a/utils/man/man1/tsshashsequencestart.1 b/utils/man/man1/tsshashsequencestart.1
+index f6d7f52..663ae69 100644
+--- a/utils/man/man1/tsshashsequencestart.1
++++ b/utils/man/man1/tsshashsequencestart.1
+@@ -21,3 +21,5 @@ continue
+ .TP
+ 20
+ command decrypt
++.PP
++Depending on the build configuration, some hash algorithms may not be available.
+diff --git a/utils/man/man1/tsshmac.1 b/utils/man/man1/tsshmac.1
+index e64a861..70d2632 100644
+--- a/utils/man/man1/tsshmac.1
++++ b/utils/man/man1/tsshmac.1
+@@ -35,3 +35,5 @@ command decrypt
+ .TP
+ 40
+ response encrypt
++.PP
++Depending on the build configuration, some hash algorithms may not be available.
+diff --git a/utils/man/man1/tsshmacstart.1 b/utils/man/man1/tsshmacstart.1
+index 65d4ab6..64bcf2f 100644
+--- a/utils/man/man1/tsshmacstart.1
++++ b/utils/man/man1/tsshmacstart.1
+@@ -23,3 +23,5 @@ password for sequence (default empty)
+ .TP
+ 01
+ continue
++.PP
++Depending on the build configuration, some hash algorithms may not be available.
+diff --git a/utils/man/man1/tssimportpem.1 b/utils/man/man1/tssimportpem.1
+index 21c362e..bf79c92 100644
+--- a/utils/man/man1/tssimportpem.1
++++ b/utils/man/man1/tssimportpem.1
+@@ -67,3 +67,5 @@ command decrypt
+ .TP
+ 40
+ response encrypt
++.PP
++Depending on the build configuration, some hash algorithms may not be available.
+diff --git a/utils/man/man1/tssloadexternal.1 b/utils/man/man1/tssloadexternal.1
+index e32a251..2a9ba66 100644
+--- a/utils/man/man1/tssloadexternal.1
++++ b/utils/man/man1/tssloadexternal.1
+@@ -71,3 +71,5 @@ response encrypt
+ .TP
+ 80
+ audit
++.PP
++Depending on the build configuration, some hash algorithms may not be available.
+diff --git a/utils/man/man1/tssnvcertify.1 b/utils/man/man1/tssnvcertify.1
+index c55f6dc..83d2380 100644
+--- a/utils/man/man1/tssnvcertify.1
++++ b/utils/man/man1/tssnvcertify.1
+@@ -50,3 +50,5 @@ command decrypt
+ .TP
+ 40
+ response encrypt
++.PP
++Depending on the build configuration, some hash algorithms may not be available.
+diff --git a/utils/man/man1/tssnvdefinespace.1 b/utils/man/man1/tssnvdefinespace.1
+index 0f378e9..642508b 100644
+--- a/utils/man/man1/tssnvdefinespace.1
++++ b/utils/man/man1/tssnvdefinespace.1
+@@ -99,3 +99,5 @@ continue
+ .TP
+ 20
+ command decrypt
++.PP
++Depending on the build configuration, some hash algorithms may not be available.
+diff --git a/utils/man/man1/tsspolicysigned.1 b/utils/man/man1/tsspolicysigned.1
+index f50b81a..2f745c0 100644
+--- a/utils/man/man1/tsspolicysigned.1
++++ b/utils/man/man1/tsspolicysigned.1
+@@ -44,3 +44,5 @@ ticket file name]
+ .TP
+ [\-to
+ timeout file name]
++.PP
++Depending on the build configuration, some hash algorithms may not be available.
+diff --git a/utils/man/man1/tssquote.1 b/utils/man/man1/tssquote.1
+index 04a2e60..fef5c39 100644
+--- a/utils/man/man1/tssquote.1
++++ b/utils/man/man1/tssquote.1
+@@ -44,3 +44,5 @@ command decrypt
+ .TP
+ 40
+ response encrypt
++.PP
++Depending on the build configuration, some hash algorithms may not be available.
+diff --git a/utils/man/man1/tssrsadecrypt.1 b/utils/man/man1/tssrsadecrypt.1
+index 6c35e42..ab77103 100644
+--- a/utils/man/man1/tssrsadecrypt.1
++++ b/utils/man/man1/tssrsadecrypt.1
+@@ -31,3 +31,5 @@ command decrypt
+ .TP
+ 40
+ response encrypt
++.PP
++Depending on the build configuration, some hash algorithms may not be available.
+diff --git a/utils/man/man1/tsssetcommandcodeauditstatus.1 b/utils/man/man1/tsssetcommandcodeauditstatus.1
+index c4d19dc..7d44fb2 100644
+--- a/utils/man/man1/tsssetcommandcodeauditstatus.1
++++ b/utils/man/man1/tsssetcommandcodeauditstatus.1
+@@ -29,3 +29,5 @@ continue
+ .TP
+ 20
+ command decrypt
++.PP
++Depending on the build configuration, some hash algorithms may not be available.
+diff --git a/utils/man/man1/tsssetprimarypolicy.1 b/utils/man/man1/tsssetprimarypolicy.1
+index c67c1f9..a3db8d2 100644
+--- a/utils/man/man1/tsssetprimarypolicy.1
++++ b/utils/man/man1/tsssetprimarypolicy.1
+@@ -26,3 +26,5 @@ continue
+ .TP
+ 20
+ command decrypt
++.PP
++Depending on the build configuration, some hash algorithms may not be available.
+diff --git a/utils/man/man1/tsssign.1 b/utils/man/man1/tsssign.1
+index d5ad351..83d3cfa 100644
+--- a/utils/man/man1/tsssign.1
++++ b/utils/man/man1/tsssign.1
+@@ -46,3 +46,5 @@ continue
+ .TP
+ 20
+ command decrypt
++.PP
++Depending on the build configuration, some hash algorithms may not be available.
+diff --git a/utils/man/man1/tssstartauthsession.1 b/utils/man/man1/tssstartauthsession.1
+index 3e944bb..0bb5022 100644
+--- a/utils/man/man1/tssstartauthsession.1
++++ b/utils/man/man1/tssstartauthsession.1
+@@ -35,3 +35,5 @@ bind password for bind handle (default empty)]
+ .TP
+ [\-on
+ nonceTPM file for policy session (default do not save)]
++.PP
++Depending on the build configuration, some hash algorithms may not be available.
+diff --git a/utils/man/man1/tssverifysignature.1 b/utils/man/man1/tssverifysignature.1
+index e2d6460..67b7ff5 100644
+--- a/utils/man/man1/tssverifysignature.1
++++ b/utils/man/man1/tssverifysignature.1
+@@ -57,3 +57,5 @@ command decrypt
+ .TP
+ 80
+ audit
++.PP
++Depending on the build configuration, some hash algorithms may not be available.
+diff --git a/utils/nvcertify.c b/utils/nvcertify.c
+index 81bde69..6882bfb 100644
+--- a/utils/nvcertify.c
++++ b/utils/nvcertify.c
+@@ -445,5 +445,7 @@ static void printUsage(void)
+     printf("\t01\tcontinue\n");
+     printf("\t20\tcommand decrypt\n");
+     printf("\t40\tresponse encrypt\n");
++    printf("\n");
++    printf("Depending on the build configuration, some hash algorithms may not be available.\n");
+     exit(1);	
+ }
+diff --git a/utils/nvdefinespace.c b/utils/nvdefinespace.c
+index 18ce6ea..94e6cbd 100644
+--- a/utils/nvdefinespace.c
++++ b/utils/nvdefinespace.c
+@@ -590,5 +590,7 @@ static void printUsage(void)
+     printf("\t-se[0-2] session handle / attributes (default PWAP)\n");
+     printf("\t01\tcontinue\n");
+     printf("\t20\tcommand decrypt\n");
++    printf("\n");
++    printf("Depending on the build configuration, some hash algorithms may not be available.\n");
+     exit(1);	
+ }
+diff --git a/utils/policysigned.c b/utils/policysigned.c
+index 469cec9..8283464 100644
+--- a/utils/policysigned.c
++++ b/utils/policysigned.c
+@@ -452,5 +452,7 @@ static void printUsage(void)
+     printf("\t[-pwdk\tsigning key password (default null)]\n");
+     printf("\t[-tk\tticket file name]\n");
+     printf("\t[-to\ttimeout file name]\n");
++    printf("\n");
++    printf("Depending on the build configuration, some hash algorithms may not be available.\n");
+     exit(1);	
+ }
+diff --git a/utils/quote.c b/utils/quote.c
+index c29fad0..7523578 100644
+--- a/utils/quote.c
++++ b/utils/quote.c
+@@ -435,5 +435,7 @@ static void printUsage(void)
+     printf("\t01\tcontinue\n");
+     printf("\t20\tcommand decrypt\n");
+     printf("\t40\tresponse encrypt\n");
++    printf("\n");
++    printf("Depending on the build configuration, some hash algorithms may not be available.\n");
+     exit(1);	
+ }
+diff --git a/utils/rsadecrypt.c b/utils/rsadecrypt.c
+index e2846af..fe5086a 100644
+--- a/utils/rsadecrypt.c
++++ b/utils/rsadecrypt.c
+@@ -507,5 +507,7 @@ static void printUsage(void)
+     printf("\t01\tcontinue\n");
+     printf("\t20\tcommand decrypt\n");
+     printf("\t40\tresponse encrypt\n");
++    printf("\n");
++    printf("Depending on the build configuration, some hash algorithms may not be available.\n");
+     exit(1);	
+ }
+diff --git a/utils/setcommandcodeauditstatus.c b/utils/setcommandcodeauditstatus.c
+index 7a880ae..ddecad5 100644
+--- a/utils/setcommandcodeauditstatus.c
++++ b/utils/setcommandcodeauditstatus.c
+@@ -294,5 +294,7 @@ static void printUsage(void)
+     printf("\t-se[0-2] session handle / attributes (default PWAP)\n");
+     printf("\t01\tcontinue\n");
+     printf("\t20\tcommand decrypt\n");
++    printf("\n");
++    printf("Depending on the build configuration, some hash algorithms may not be available.\n");
+     exit(1);	
+ }
+diff --git a/utils/setprimarypolicy.c b/utils/setprimarypolicy.c
+index 619937f..c03883f 100644
+--- a/utils/setprimarypolicy.c
++++ b/utils/setprimarypolicy.c
+@@ -296,5 +296,7 @@ static void printUsage(void)
+     printf("\t-se[0-2] session handle / attributes (default PWAP)\n");
+     printf("\t01\tcontinue\n");
+     printf("\t20\tcommand decrypt\n");
++    printf("\n");
++    printf("Depending on the build configuration, some hash algorithms may not be available.\n");
+     exit(1);	
+ }
+diff --git a/utils/sign.c b/utils/sign.c
+index 0635366..f31196b 100644
+--- a/utils/sign.c
++++ b/utils/sign.c
+@@ -485,5 +485,7 @@ static void printUsage(void)
+     printf("\t-se[0-2] session handle / attributes (default PWAP)\n");
+     printf("\t01\tcontinue\n");
+     printf("\t20\tcommand decrypt\n");
++    printf("\n");
++    printf("Depending on the build configuration, some hash algorithms may not be available.\n");
+     exit(1);	
+ }
+diff --git a/utils/startauthsession.c b/utils/startauthsession.c
+index d47c731..e6ddd5a 100644
+--- a/utils/startauthsession.c
++++ b/utils/startauthsession.c
+@@ -297,5 +297,7 @@ static void printUsage(void)
+     printf("\t[-pwdb\tbind password for bind handle (default empty)]\n");
+     printf("\t[-sym\t(xor, aes) symmetric parameter encryption algorithm (default xor)]\n");
+     printf("\t[-on\tnonceTPM file for policy session (default do not save)]\n");
++    printf("\n");
++    printf("Depending on the build configuration, some hash algorithms may not be available.\n");
+     exit(1);	
+ }
+diff --git a/utils/verifysignature.c b/utils/verifysignature.c
+index 57978d5..41ba05b 100644
+--- a/utils/verifysignature.c
++++ b/utils/verifysignature.c
+@@ -484,5 +484,7 @@ static void printUsage(void)
+     printf("\t01\tcontinue\n");
+     printf("\t20\tcommand decrypt\n");
+     printf("\t80\taudit\n");
++    printf("\n");
++    printf("Depending on the build configuration, some hash algorithms may not be available.\n");
+     exit(1);	
+ }
+-- 
+2.34.3
+
